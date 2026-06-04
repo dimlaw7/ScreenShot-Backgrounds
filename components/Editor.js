@@ -21,8 +21,8 @@ const Editor = ({ backgroundImage, userImage, scale, setScale }) => {
           {userImage && (
             <KonvaImage
               image={userImage}
-              x={0}
-              y={0}
+              x={(CANVAS_WIDTH - 300 * scale) / 2}
+              y={(CANVAS_HEIGHT - 300 * scale) / 2}
               width={300 * scale}
               height={300 * scale}
               draggable
