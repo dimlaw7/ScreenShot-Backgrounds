@@ -2,10 +2,10 @@
 
 import { Layer, Stage, Image as KonvaImage } from "react-konva";
 
-const Editor = ({ backgroundImage, userImage }) => {
+const Editor = ({ backgroundImage, userImage, scale, setScale }) => {
   return (
     <div>
-      <Stage width={600} height={600}>
+      <Stage width={600} height={400}>
         <Layer>
           {backgroundImage && (
             <KonvaImage width={600} height={400} image={backgroundImage} />
@@ -14,10 +14,10 @@ const Editor = ({ backgroundImage, userImage }) => {
           {userImage && (
             <KonvaImage
               image={userImage}
-              x={150}
-              y={150}
-              width={300}
-              height={300}
+              x={0}
+              y={0}
+              width={300 * scale}
+              height={300 * scale}
               draggable
             />
           )}

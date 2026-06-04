@@ -9,6 +9,8 @@ export default function Home() {
 
   const [backgroundImage, setBackgroundImage] = useState(null);
 
+  const [scale, setScale] = useState(1);
+
   useEffect(() => {
     const bg = new window.Image();
 
@@ -46,7 +48,20 @@ export default function Home() {
 
       <input type="file" accept="image/*" onChange={handleUpload} />
 
-      <Editor backgroundImage={backgroundImage} userImage={userImage} />
+      <input
+        type="range"
+        min="0.2"
+        max="3"
+        step="0.1"
+        onChange={(e) => setScale(e.target.value)}
+      />
+
+      <Editor
+        backgroundImage={backgroundImage}
+        userImage={userImage}
+        scale={scale}
+        setScale={setScale}
+      />
     </main>
   );
 }
