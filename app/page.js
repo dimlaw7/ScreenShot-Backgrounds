@@ -53,6 +53,7 @@ export default function Home() {
         min="0.2"
         max="3"
         step="0.1"
+        value={scale}
         onChange={(e) => setScale(e.target.value)}
       />
 
