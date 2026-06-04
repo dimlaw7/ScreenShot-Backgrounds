@@ -4,6 +4,14 @@
 import Editor from "@/components/Editor";
 import { useEffect, useState } from "react";
 
+const backgrounds = [
+  "/backgrounds/bg1.jpg",
+  "/backgrounds/bg2.jpg",
+  "/backgrounds/bg3.jpg",
+  "/backgrounds/bg4.jpg",
+  "/backgrounds/bg5.jpg",
+];
+
 export default function Home() {
   const [userImage, setUserImage] = useState(null);
 
@@ -11,14 +19,21 @@ export default function Home() {
 
   const [scale, setScale] = useState(1);
 
-  useEffect(() => {
+  const [selectedBg, setSelectedBg] = useState(backgrounds[0]);
+
+  const loadBackground = (src) => {
     const bg = new window.Image();
 
-    bg.src = "/backgrounds/bg1.png";
+    bg.src = src;
 
     bg.onload = () => {
+      setSelectedBg(src);
       setBackgroundImage(bg);
     };
+  };
+
+  useEffect(() => {
+    loadBackground(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
   }, []);
 
   const handleUpload = (event) => {
@@ -63,6 +78,22 @@ export default function Home() {
         scale={scale}
         setScale={setScale}
       />
+
+      <div className="mt-6">
+        <h2 className="mb-3 font-semibold">Choose Background</h2>
+
+        <div className="flex flex-wrap gap-3">
+          {backgrounds.map((bg) => (
+            <button
+              key={bg}
+              onClick={() => loadBackground(bg)}
+              className={`overflow-hidden rounded border transition hover:scale-105 ${selectedBg === bg ? "ring-2 ring-yellow-500" : ""}`}
+            >
+              <img src={bg} alt="" className="h-16 w-24 object-cover" />
+            </button>
+          ))}
+        </div>
+      </div>
     </main>
   );
 }
