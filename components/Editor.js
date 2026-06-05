@@ -2,13 +2,13 @@
 
 import { Layer, Stage, Image as KonvaImage } from "react-konva";
 
-const Editor = ({ backgroundImage, userImage, scale, setScale }) => {
+const Editor = ({ backgroundImage, userImage, scale, setScale, stageRef }) => {
   const CANVAS_WIDTH = 600;
   const CANVAS_HEIGHT = 600;
 
   return (
     <div>
-      <Stage width={CANVAS_WIDTH} height={CANVAS_HEIGHT}>
+      <Stage width={CANVAS_WIDTH} height={CANVAS_HEIGHT} ref={stageRef}>
         <Layer>
           {backgroundImage && (
             <KonvaImage

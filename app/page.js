@@ -2,7 +2,7 @@
 "use client";
 
 import Editor from "@/components/Editor";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const backgrounds = [
   "/backgrounds/bg1.jpg",
@@ -21,6 +21,8 @@ export default function Home() {
 
   const [selectedBg, setSelectedBg] = useState(backgrounds[0]);
 
+  const stageRef = useRef(null);
+
   const loadBackground = (src) => {
     const bg = new window.Image();
 
@@ -38,7 +40,6 @@ export default function Home() {
 
   const handleUpload = (event) => {
     const file = event.target.files?.[0];
-    console.log(event.target.files);
 
     if (!file) return;
 
@@ -55,6 +56,24 @@ export default function Home() {
     };
 
     reader.readAsDataURL(file);
+  };
+
+  const handleDownload = () => {
+    const uri = stageRef.current.toDataURL({
+      mimeType: "image/png",
+      quality: 1,
+      pixelRatio: 3,
+    });
+
+    const link = document.createElement("a");
+
+    link.download = "screenshot-sownload.png";
+    link.href = uri;
+    console.log(link);
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -77,7 +96,10 @@ export default function Home() {
         userImage={userImage}
         scale={scale}
         setScale={setScale}
+        stageRef={stageRef}
       />
+
+      <button onClick={handleDownload}>Download Image</button>
 
       <div className="mt-6">
         <h2 className="mb-3 font-semibold">Choose Background</h2>
