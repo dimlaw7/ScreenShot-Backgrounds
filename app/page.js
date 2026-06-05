@@ -12,6 +12,13 @@ const backgrounds = [
   "/backgrounds/bg5.jpg",
 ];
 
+const ratio = [
+  { label: "1:1", width: 600, height: 600 },
+  { label: "4:5", width: 600, height: 750 },
+  { label: "16:9", width: 800, height: 450 },
+  { label: "9:16", width: 450, height: 800 },
+];
+
 export default function Home() {
   const [userImage, setUserImage] = useState(null);
 
@@ -20,6 +27,8 @@ export default function Home() {
   const [scale, setScale] = useState(1);
 
   const [selectedBg, setSelectedBg] = useState(backgrounds[0]);
+
+  const [canvasSize, setCanvasSize] = useState({ width: 600, height: 600 });
 
   const stageRef = useRef(null);
 
@@ -97,9 +106,27 @@ export default function Home() {
         scale={scale}
         setScale={setScale}
         stageRef={stageRef}
+        stageSize={canvasSize}
       />
 
       <button onClick={handleDownload}>Download Image</button>
+
+      <div className="mt-6">
+        <h2 className="mb-3 font-semibold">Choose Background</h2>
+
+        <div className="flex flex-wrap gap-3">
+          {ratio.map((r) => (
+            <button
+              key={r.label}
+              onClick={() =>
+                setCanvasSize({ width: r.width, height: r.height })
+              }
+            >
+              {r.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="mt-6">
         <h2 className="mb-3 font-semibold">Choose Background</h2>

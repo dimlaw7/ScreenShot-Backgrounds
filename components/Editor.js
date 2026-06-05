@@ -2,18 +2,22 @@
 
 import { Layer, Stage, Image as KonvaImage } from "react-konva";
 
-const Editor = ({ backgroundImage, userImage, scale, setScale, stageRef }) => {
-  const CANVAS_WIDTH = 600;
-  const CANVAS_HEIGHT = 600;
-
+const Editor = ({
+  backgroundImage,
+  userImage,
+  scale,
+  setScale,
+  stageRef,
+  stageSize,
+}) => {
   return (
     <div>
-      <Stage width={CANVAS_WIDTH} height={CANVAS_HEIGHT} ref={stageRef}>
+      <Stage width={stageSize.width} height={stageSize.height} ref={stageRef}>
         <Layer>
           {backgroundImage && (
             <KonvaImage
-              width={CANVAS_WIDTH}
-              height={CANVAS_HEIGHT}
+              width={stageSize.width}
+              height={stageSize.height}
               image={backgroundImage}
             />
           )}
@@ -21,14 +25,14 @@ const Editor = ({ backgroundImage, userImage, scale, setScale, stageRef }) => {
           {userImage && (
             <KonvaImage
               image={userImage}
-              x={(CANVAS_WIDTH - 300 * scale) / 2}
-              y={(CANVAS_HEIGHT - 300 * scale) / 2}
+              x={(stageSize.width - 300 * scale) / 2}
+              y={(stageSize.height - 300 * scale) / 2}
               width={300 * scale}
               height={300 * scale}
               draggable
               dragBoundFunc={(pos) => {
-                const stageWidth = CANVAS_WIDTH;
-                const stageHeight = CANVAS_HEIGHT;
+                const stageWidth = stageSize.width;
+                const stageHeight = stageSize.height;
 
                 const imgWidth = 300 * scale;
                 const imgHeight = 300 * scale;
