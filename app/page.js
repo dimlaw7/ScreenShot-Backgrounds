@@ -2,7 +2,7 @@
 "use client";
 
 import Editor from "@/components/Editor";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 const backgrounds = [
   "/backgrounds/bg1.jpg",
@@ -12,12 +12,15 @@ const backgrounds = [
   "/backgrounds/bg5.jpg",
 ];
 
-const ratio = [
-  { label: "1:1", width: 600, height: 600 },
-  { label: "4:5", width: 600, height: 750 },
-  { label: "16:9", width: 800, height: 450 },
-  { label: "9:16", width: 450, height: 800 },
+const aspectRatios = [
+  { label: "Native", width: 5, height: 4 },
+  { label: "3:2", width: 3, height: 2 },
+  { label: "1:1", width: 1, height: 1 },
+  { label: "16:9", width: 16, height: 9 },
+  { label: "9:16", width: 9, height: 16 },
 ];
+
+const DEFAULT_RATIO = { width: 5, height: 4 };
 
 export default function Home() {
   const [userImage, setUserImage] = useState(null);
@@ -28,9 +31,52 @@ export default function Home() {
 
   const [selectedBg, setSelectedBg] = useState(backgrounds[0]);
 
-  const [canvasSize, setCanvasSize] = useState({ width: 600, height: 600 });
+  const [canvasSize, setCanvasSize] = useState({ width: 600, height: 480 }); //The Stage size {width: 600, height: 480}
 
   const stageRef = useRef(null);
+
+  const updateSize = useCallback((customRatio = DEFAULT_RATIO) => {
+    const maxWidth = window.innerWidth * 0.9;
+    const maxHeight = window.innerHeight * 0.6;
+    const ratio = customRatio.width / customRatio.height;
+
+    let stageContainerWidth = stageRef.current.container().clientWidth;
+    let stageContainerHeight = Math.round(stageContainerWidth / ratio);
+
+    if (stageContainerHeight > maxHeight) {
+      stageContainerHeight = maxHeight;
+      stageContainerWidth = Math.round(maxHeight * ratio);
+    }
+
+    let width = Math.round(stageContainerWidth * 0.9);
+    let height = stageContainerHeight;
+
+    console.log(ratio, stageContainerWidth, stageContainerHeight);
+
+    // if (width > 700) {
+    //   width = 700;
+    //   //height = width / ratio;
+    // }
+
+    setCanvasSize({
+      width: Math.round(width),
+      height: Math.round(height),
+    });
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => updateSize();
+
+    loadBackground(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
+
+    updateSize(DEFAULT_RATIO);
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const loadBackground = (src) => {
     const bg = new window.Image();
@@ -42,10 +88,6 @@ export default function Home() {
       setBackgroundImage(bg);
     };
   };
-
-  useEffect(() => {
-    loadBackground(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
-  }, []);
 
   const handleUpload = (event) => {
     const file = event.target.files?.[0];
@@ -86,61 +128,63 @@ export default function Home() {
   };
 
   return (
-    <main>
-      <h1>Screenshot Background</h1>
+    <main className="flex flex-col lg:flex-row">
+      <div className="flex-1">
+        <h1>Screenshot Background</h1>
 
-      <input type="file" accept="image/*" onChange={handleUpload} />
+        <input type="file" accept="image/*" onChange={handleUpload} />
 
-      <input
-        type="range"
-        min="0.2"
-        max="3"
-        step="0.1"
-        value={scale}
-        onChange={(e) => setScale(e.target.value)}
-      />
+        <input
+          type="range"
+          min="0.2"
+          max="3"
+          step="0.1"
+          value={scale}
+          onChange={(e) => setScale(e.target.value)}
+        />
 
-      <Editor
-        backgroundImage={backgroundImage}
-        userImage={userImage}
-        scale={scale}
-        setScale={setScale}
-        stageRef={stageRef}
-        stageSize={canvasSize}
-      />
-
-      <button onClick={handleDownload}>Download Image</button>
-
-      <div className="mt-6">
-        <h2 className="mb-3 font-semibold">Choose Background</h2>
-
-        <div className="flex flex-wrap gap-3">
-          {ratio.map((r) => (
-            <button
-              key={r.label}
-              onClick={() =>
-                setCanvasSize({ width: r.width, height: r.height })
-              }
-            >
-              {r.label}
-            </button>
-          ))}
-        </div>
+        <Editor
+          backgroundImage={backgroundImage}
+          userImage={userImage}
+          scale={scale}
+          setScale={setScale}
+          stageRef={stageRef}
+          stageSize={canvasSize}
+        />
       </div>
 
-      <div className="mt-6">
-        <h2 className="mb-3 font-semibold">Choose Background</h2>
+      <div className="lg:w-80">
+        <button onClick={handleDownload}>Download Image</button>
 
-        <div className="flex flex-wrap gap-3">
-          {backgrounds.map((bg) => (
-            <button
-              key={bg}
-              onClick={() => loadBackground(bg)}
-              className={`overflow-hidden rounded border transition hover:scale-105 ${selectedBg === bg ? "ring-2 ring-yellow-500" : ""}`}
-            >
-              <img src={bg} alt="" className="h-16 w-24 object-cover" />
-            </button>
-          ))}
+        <div className="mt-6">
+          <h2 className="mb-3 font-semibold">Aspect Ratios</h2>
+
+          <div className="flex flex-wrap gap-3">
+            {aspectRatios.map((r) => (
+              <button
+                key={r.label}
+                onClick={() => updateSize({ width: r.width, height: r.height })}
+              >
+                {r.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <h2 className="mb-3 font-semibold">Choose Background</h2>
+
+          <div className="flex flex-wrap gap-3">
+            {backgrounds.map((bg) => (
+              <button
+                key={bg}
+                onClick={() => loadBackground(bg)}
+                className={`overflow-hidden rounded border transition hover:scale-105 ${selectedBg === bg ? "ring-2 ring-yellow-500" : ""}`}
+              >
+                <img src={bg} alt="" className="h-16 w-24 object-cover" />
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </main>

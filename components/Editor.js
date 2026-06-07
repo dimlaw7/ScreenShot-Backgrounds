@@ -12,7 +12,12 @@ const Editor = ({
 }) => {
   return (
     <div>
-      <Stage width={stageSize.width} height={stageSize.height} ref={stageRef}>
+      <Stage
+        width={stageSize.width}
+        height={stageSize.height}
+        ref={stageRef}
+        className="flex h-[61vh] items-center justify-center border border-gray-300"
+      >
         <Layer>
           {backgroundImage && (
             <KonvaImage
