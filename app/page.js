@@ -38,24 +38,24 @@ export default function Home() {
   const stageRef = useRef(null);
 
   const updateSize = useCallback((customRatio = DEFAULT_RATIO) => {
-    const maxWidth = window.innerWidth * 0.9;
-    const maxHeight = window.innerHeight * 0.6;
+    const maxWidth = stageRef.current.container().clientWidth * 0.9;
+    const maxHeight = window.innerHeight * 0.5;
     const ratio = customRatio.width / customRatio.height;
 
-    let stageContainerWidth = stageRef.current.container().clientWidth;
-    let stageContainerHeight = Math.round(stageContainerWidth / ratio);
+    let stageContainerWidth = maxWidth;
+    let stageContainerHeight = stageContainerWidth / ratio;
 
     if (stageContainerHeight > maxHeight) {
       stageContainerHeight = maxHeight;
-      stageContainerWidth = Math.round(maxHeight * ratio);
+      stageContainerWidth = maxHeight * ratio;
     }
 
-    let width = Math.round(stageContainerWidth * 0.9);
-    let height = stageContainerHeight;
+    let width = Math.round(stageContainerWidth);
+    let height = Math.round(stageContainerHeight);
 
     setCanvasSize({
-      width: Math.round(width),
-      height: Math.round(height),
+      width: width,
+      height: height,
     });
   }, []);
 
