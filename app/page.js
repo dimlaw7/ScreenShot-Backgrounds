@@ -36,6 +36,7 @@ export default function Home() {
   const [canvasSize, setCanvasSize] = useState({ width: 600, height: 480 }); //The Stage size {width: 600, height: 480}
 
   const stageRef = useRef(null);
+  const uploadRef = useRef(null);
 
   const updateSize = useCallback((customRatio = DEFAULT_RATIO) => {
     const maxWidth = stageRef.current.container().clientWidth * 0.9;
@@ -124,7 +125,7 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <Header uploadRef={uploadRef} />
       <Hero />
       <main className="flex flex-col lg:flex-row">
         <div className="flex-1">
@@ -133,6 +134,7 @@ export default function Home() {
             accept="image/*"
             onChange={handleUpload}
             value=""
+            ref={uploadRef}
           />
 
           <input
