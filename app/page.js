@@ -63,8 +63,6 @@ export default function Home() {
   useEffect(() => {
     const handleResize = () => updateSize();
 
-    loadBackground(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
-
     updateSize(DEFAULT_RATIO);
 
     window.addEventListener("resize", handleResize);
@@ -75,6 +73,8 @@ export default function Home() {
   }, []);
 
   const loadBackground = (src) => {
+    if (!userImage) return;
+
     const bg = new window.Image();
 
     bg.src = src;
@@ -89,6 +89,8 @@ export default function Home() {
     const file = event.target.files?.[0];
 
     if (!file) return;
+
+    loadBackground(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
 
     const reader = new FileReader();
 
