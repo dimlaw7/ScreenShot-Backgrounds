@@ -135,15 +135,7 @@ export default function Home() {
             onChange={handleUpload}
             value=""
             ref={uploadRef}
-          />
-
-          <input
-            type="range"
-            min="0.2"
-            max="3"
-            step="0.1"
-            value={scale}
-            onChange={(e) => setScale(e.target.value)}
+            className="hidden"
           />
 
           <Editor
@@ -158,6 +150,21 @@ export default function Home() {
 
         <div className="lg:w-80">
           <button onClick={handleDownload}>Download Image</button>
+
+          <div className="mt-6">
+            <h2 className="mb-3 font-semibold">Aspect Ratios</h2>
+
+            <div>
+              <input
+                type="range"
+                min="0.2"
+                max="3"
+                step="0.1"
+                value={scale}
+                onChange={(e) => setScale(e.target.value)}
+              />
+            </div>
+          </div>
 
           <div className="mt-6">
             <h2 className="mb-3 font-semibold">Aspect Ratios</h2>

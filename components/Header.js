@@ -6,11 +6,11 @@ const Header = ({ uploadRef }) => {
     uploadRef.current.click();
   };
   return (
-    <header className="flex h-21 items-center px-5">
+    <header className="flex h-21 items-center px-5 sm:px-10 xl:px-30">
       <nav className="flex flex-1 items-center justify-between">
         <Link
           href="/"
-          className="truncate text-base font-extrabold tracking-normal text-gray-950"
+          className="truncate text-lg font-extrabold tracking-normal text-gray-950 lg:text-2xl"
         >
           ScreenShotBG
         </Link>
