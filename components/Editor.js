@@ -34,9 +34,14 @@ const Editor = ({
   setScale,
   stageRef,
   stageSize,
+  uploadRef,
 }) => {
+  const handleUploadBtn = () => {
+    uploadRef.current.click();
+  };
+
   return (
-    <div>
+    <div className="after: relative">
       <Stage
         width={stageSize.width}
         height={stageSize.height}
@@ -107,6 +112,17 @@ const Editor = ({
           )}
         </Layer>
       </Stage>
+      {!userImage && (
+        <>
+          <div className="absolute top-0 h-full w-full bg-gray-900 opacity-20"></div>
+          <button
+            className="text-background border--gray-900 absolute top-1/2 left-1/2 flex -translate-1/2 cursor-pointer items-center gap-2 rounded-lg border-2 bg-gray-950 px-7 py-3 text-base font-semibold shadow-xl transition hover:bg-gray-800"
+            onClick={() => handleUploadBtn()}
+          >
+            <span>Upload a Photo</span>
+          </button>
+        </>
+      )}
     </div>
   );
 };

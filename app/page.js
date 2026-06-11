@@ -129,7 +129,7 @@ export default function Home() {
     <>
       <Header uploadRef={uploadRef} />
       <Hero />
-      <main className="flex flex-col lg:flex-row">
+      <main className="container flex flex-col px-5 lg:flex-row">
         <div className="flex-1">
           <input
             type="file"
@@ -147,6 +147,7 @@ export default function Home() {
             setScale={setScale}
             stageRef={stageRef}
             stageSize={canvasSize}
+            uploadRef={uploadRef}
           />
         </div>
 
