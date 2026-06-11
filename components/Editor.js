@@ -27,6 +27,34 @@ const getCoverDimensions = (img, containerWidth, containerHeight) => {
   };
 };
 
+const getContainDimensions = (
+  img,
+  containerWidth,
+  containerHeight,
+  scale = 1,
+) => {
+  const imgRatio = img.width / img.height;
+  const containerRatio = containerWidth / containerHeight;
+
+  let width;
+  let height;
+
+  if (imgRatio > containerRatio) {
+    width = containerWidth * 0.6 * scale;
+    height = width / imgRatio;
+  } else {
+    height = containerHeight * 0.6 * scale;
+    width = height * imgRatio;
+  }
+
+  return {
+    width,
+    height,
+    x: (containerWidth - width) / 2,
+    y: (containerHeight - height) / 2,
+  };
+};
+
 const Editor = ({
   backgroundImage,
   userImage,
@@ -72,10 +100,12 @@ const Editor = ({
           {userImage && (
             <KonvaImage
               image={userImage}
-              x={(stageSize.width - 300 * scale) / 2}
-              y={(stageSize.height - 300 * scale) / 2}
-              width={300 * scale}
-              height={300 * scale}
+              {...getContainDimensions(
+                userImage,
+                stageSize.width,
+                stageSize.height,
+                scale,
+              )}
               draggable
               dragBoundFunc={(pos) => {
                 const stageWidth = stageSize.width;

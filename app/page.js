@@ -29,7 +29,7 @@ export default function Home() {
 
   const [backgroundImage, setBackgroundImage] = useState(null);
 
-  const [scale, setScale] = useState(1);
+  const [scale, setScale] = useState(0.5);
 
   const [selectedBg, setSelectedBg] = useState(backgrounds[0]);
 
@@ -70,11 +70,9 @@ export default function Home() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [updateSize]);
 
   const loadBackground = (src) => {
-    if (!userImage) return;
-
     const bg = new window.Image();
 
     bg.src = src;
@@ -90,8 +88,6 @@ export default function Home() {
 
     if (!file) return;
 
-    loadBackground(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
-
     const reader = new FileReader();
 
     reader.onload = () => {
@@ -101,6 +97,10 @@ export default function Home() {
 
       img.onload = () => {
         setUserImage(img);
+
+        loadBackground(
+          backgrounds[Math.floor(Math.random() * backgrounds.length)],
+        );
       };
     };
 
