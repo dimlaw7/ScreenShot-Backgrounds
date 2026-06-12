@@ -29,7 +29,7 @@ export default function Home() {
 
   const [backgroundImage, setBackgroundImage] = useState(null);
 
-  const [scale, setScale] = useState(0.5);
+  const [scale, setScale] = useState(1);
 
   const [selectedBg, setSelectedBg] = useState(backgrounds[0]);
 

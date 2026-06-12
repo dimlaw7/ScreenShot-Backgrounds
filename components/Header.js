@@ -6,24 +6,30 @@ const Header = ({ uploadRef }) => {
     uploadRef.current.click();
   };
   return (
-    <header className="flex h-21 items-center px-5 sm:px-10 xl:px-30">
-      <nav className="flex flex-1 items-center justify-between">
-        <Link
-          href="/"
-          className="truncate text-lg font-extrabold tracking-normal text-gray-950 lg:text-2xl"
-        >
-          ScreenShotBG
-        </Link>
+    <header className="lg:shadow-sm">
+      <div className="mx-auto flex h-16 max-w-7xl flex-1 items-center justify-between px-3.5 lg:px-0">
+        <div className="flex items-center gap-8">
+          <Link
+            href="/"
+            className="flex items-center truncate text-lg font-extrabold tracking-normal text-gray-950 lg:text-2xl"
+          >
+            <div className="projectlogo mr-0.5"></div>
+            ScreenShot<span className="text-primary">BG</span>
+          </Link>
+          <p className="text-muted hidden text-sm font-semibold lg:block">
+            Make your screenshots beautiful
+          </p>
+        </div>
         <div>
           <button
-            className="text-background border--gray-900 flex cursor-pointer items-center gap-2 rounded-lg border-2 bg-gray-950 px-7 py-3 text-base font-semibold shadow-xl transition hover:bg-gray-800"
+            className="text-text border--gray-900 bg-surface border-border flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium shadow-sm transition hover:bg-gray-50 hover:shadow"
             onClick={() => handleUploadBtn()}
           >
+            <CloudUpload size={18} />
             <span>Upload</span>
-            <CloudUpload size={20} />
           </button>
         </div>
-      </nav>
+      </div>
     </header>
   );
 };

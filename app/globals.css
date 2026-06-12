@@ -1,15 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f5f5f7;
+  --background: #f7f8fa;
   --foreground: #171717;
   --primary: #145bf5;
+  --surface: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -27,6 +35,22 @@ body {
   /* font-family: Arial, Helvetica, sans-serif; */
 }
 
-/* canvas {
-  touch-action: none; /* Disable touch interactions on the canvas
-} */
+.btn {
+  @apply flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition;
+}
+
+.btn-primary {
+  @apply bg-gray-950 text-white hover:bg-gray-800;
+}
+
+.btn-secondary {
+  @apply border border-gray-300 bg-white hover:bg-gray-100;
+}
+
+.projectlogo {
+  background-image: url(/screenshotBG.png);
+  background-position: 28% 48%;
+  background-size: 390px;
+  width: 32px;
+  height: 32px;
+}
