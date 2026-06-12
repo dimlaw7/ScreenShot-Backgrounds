@@ -4,10 +4,17 @@
 import Editor from "@/components/Editor";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import {
+  Image as LucideImage,
+  Move,
+  RefreshCw,
+  Scaling,
+  ZoomIn,
+} from "lucide-react";
 import { useEffect, useState, useRef, useCallback } from "react";
 
 const backgrounds = [
-  "/backgrounds/bg1.jpg",
+  "/backgrounds/bg1.png",
   "/backgrounds/bg2.jpg",
   "/backgrounds/bg3.jpg",
   "/backgrounds/bg4.jpg",
@@ -40,7 +47,7 @@ export default function Home() {
 
   const updateSize = useCallback((customRatio = DEFAULT_RATIO) => {
     const maxWidth = stageRef.current.container().clientWidth * 0.9;
-    const maxHeight = window.innerHeight * 0.5;
+    const maxHeight = window.innerHeight * 0.7;
     const ratio = customRatio.width / customRatio.height;
 
     let stageContainerWidth = maxWidth;
@@ -128,9 +135,8 @@ export default function Home() {
   return (
     <>
       <Header uploadRef={uploadRef} />
-      <Hero />
-      <main className="container flex flex-col px-5 lg:flex-row">
-        <div className="flex-1">
+      <main className="container mx-auto mt-4 flex max-w-7xl flex-col px-5 lg:flex-row lg:px-0">
+        <div className="flex-1 lg:px-4">
           <input
             type="file"
             accept="image/*"
@@ -151,30 +157,54 @@ export default function Home() {
           />
         </div>
 
-        <div className="lg:w-80">
-          <button onClick={handleDownload}>Download Image</button>
+        <div className="lg:w-80 lg:rounded-xl lg:px-4 lg:shadow">
+          <div className="_tabs border-border mt-8 flex rounded-xl border p-4 tracking-tight shadow-sm">
+            <button className="text-primary relative flex flex-1 flex-col items-center gap-1.5 px-2 tracking-tighter">
+              <LucideImage size={16} />
+              <span className="text-xs font-bold">Background</span>
+              <div className="border-primary absolute -bottom-4 left-0 w-full border-b"></div>
+            </button>
+            <button className="text-muted relative flex flex-1 flex-col items-center gap-1.5 px-2">
+              <Scaling size={16} />
+              <span className="text-xs font-bold">Ratio</span>
+            </button>
+            <button className="text-muted relative flex flex-1 flex-col items-center gap-1.5 px-2">
+              <ZoomIn size={16} />
+              <span className="text-xs font-bold">Zoom</span>
+            </button>
+            <button className="text-muted relative flex flex-1 flex-col items-center gap-1.5 px-2">
+              <Move size={16} />
+              <span className="text-xs font-bold">Position</span>
+            </button>
+            <button className="text-muted relative flex flex-1 flex-col items-center gap-1.5 px-2">
+              <RefreshCw size={16} />
+              <span className="text-xs font-bold">Actions</span>
+            </button>
+          </div>
 
-          <div className="mt-6">
-            <h2 className="mb-3 font-semibold">Aspect Ratios</h2>
+          <div className="mt-4">
+            <h2 className="mb-2 text-xs font-semibold">Backgrounds</h2>
 
-            <div>
-              <input
-                type="range"
-                min="0.2"
-                max="3"
-                step="0.1"
-                value={scale}
-                onChange={(e) => setScale(e.target.value)}
-              />
+            <div className="flex scrollbar-none flex-nowrap gap-2 overflow-x-scroll overflow-y-hidden">
+              {backgrounds.map((bg) => (
+                <button
+                  key={bg}
+                  onClick={() => loadBackground(bg)}
+                  className={`border-border shrink-0 rounded border transition hover:scale-105 ${selectedBg === bg ? "ring-primary ring-2" : ""}`}
+                >
+                  <img src={bg} alt="" className="h-12 w-18 object-cover" />
+                </button>
+              ))}
             </div>
           </div>
 
-          <div className="mt-6">
-            <h2 className="mb-3 font-semibold">Aspect Ratios</h2>
+          <div className="mt-4">
+            <h2 className="mb-2 text-xs font-semibold">Canvas Ratios</h2>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2">
               {aspectRatios.map((r) => (
                 <button
+                  className="border-border text-muted flex-1 rounded-xl border px-4 py-2 text-xs font-bold shadow-sm"
                   key={r.label}
                   onClick={() =>
                     updateSize({ width: r.width, height: r.height })
@@ -186,20 +216,37 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-6">
-            <h2 className="mb-3 font-semibold">Choose Background</h2>
+          <div className="mt-4">
+            <h2 className="mb-2 text-xs font-semibold">Zoom</h2>
 
-            <div className="flex flex-wrap gap-3">
-              {backgrounds.map((bg) => (
-                <button
-                  key={bg}
-                  onClick={() => loadBackground(bg)}
-                  className={`overflow-hidden rounded border transition hover:scale-105 ${selectedBg === bg ? "ring-2 ring-yellow-500" : ""}`}
-                >
-                  <img src={bg} alt="" className="h-16 w-24 object-cover" />
-                </button>
-              ))}
+            <div className="flex items-center justify-between">
+              <button className="border-border text-muted rounded-xl border px-4 py-2 text-xs font-bold shadow-sm">
+                -
+              </button>
+              <input
+                type="range"
+                min="0.2"
+                max="3"
+                step="0.1"
+                value={scale}
+                onChange={(e) => setScale(e.target.value)}
+              />
+              <button className="border-border text-muted rounded-xl border px-4 py-2 text-xs font-bold shadow-sm">
+                120%
+              </button>
+              <button className="border-border text-muted rounded-xl border px-4 py-2 text-xs font-bold shadow-sm">
+                +
+              </button>
             </div>
+          </div>
+
+          <div className="mt-6">
+            <button
+              className="text-surface border--gray-900 bg-primary border-border flex w-full cursor-pointer items-center gap-2 rounded-lg border px-4 py-2 text-center text-sm font-medium shadow-sm transition hover:bg-gray-50 hover:shadow"
+              onClick={handleDownload}
+            >
+              Download Image
+            </button>
           </div>
         </div>
       </main>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Expand, RotateCcw } from "lucide-react";
 import { Layer, Stage, Image as KonvaImage } from "react-konva";
 
 const getCoverDimensions = (img, containerWidth, containerHeight) => {
@@ -69,12 +70,12 @@ const Editor = ({
   };
 
   return (
-    <div className="after: relative">
+    <div className="relative">
       <Stage
         width={stageSize.width}
         height={stageSize.height}
         ref={stageRef}
-        className="flex h-[51vh] items-center justify-center border border-gray-300 bg-white"
+        className="flex items-center justify-center rounded-xl border border-gray-300 bg-white shadow-sm"
         style={{
           backgroundImage:
             "linear-gradient(45deg, #f0f0f0 25%, transparent 25%)," +
@@ -144,13 +145,22 @@ const Editor = ({
       </Stage>
       {!userImage && (
         <>
-          <div className="absolute top-0 h-full w-full bg-gray-900 opacity-20"></div>
+          <div className="bg-muted absolute top-0 h-full w-full rounded-xl opacity-20"></div>
           <button
-            className="text-background border--gray-900 absolute top-1/2 left-1/2 flex -translate-1/2 cursor-pointer items-center gap-2 rounded-lg border-2 bg-gray-950 px-7 py-3 text-base font-semibold shadow-xl transition hover:bg-gray-800"
+            className="text-background border--gray-900 absolute top-1/2 left-1/2 flex -translate-1/2 cursor-pointer items-center gap-2 rounded-lg border-2 bg-gray-950 px-7 py-3 text-sm font-semibold shadow-xl transition hover:bg-gray-800"
             onClick={() => handleUploadBtn()}
           >
             <span>Upload a Photo</span>
           </button>
+          <div className="absolute bottom-0.5 flex hidden">
+            <button className="flex">
+              <Expand />
+              <span>Fit</span>
+            </button>
+            <button>
+              <RotateCcw />
+            </button>
+          </div>
         </>
       )}
     </div>
