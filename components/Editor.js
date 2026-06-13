@@ -19,6 +19,7 @@ const getCoverDimensions = (img, containerWidth, containerHeight) => {
     width = containerWidth;
     height = width / imgRatio;
   }
+  //console.log(width, height);
 
   return {
     width,
@@ -41,10 +42,10 @@ const getContainDimensions = (
   let height;
 
   if (imgRatio > containerRatio) {
-    width = containerWidth * 0.6 * scale;
+    width = containerWidth * 0.8 * scale;
     height = width / imgRatio;
   } else {
-    height = containerHeight * 0.6 * scale;
+    height = containerHeight * 0.8 * scale;
     width = height * imgRatio;
   }
 
@@ -75,7 +76,7 @@ const Editor = ({
         width={stageSize.width}
         height={stageSize.height}
         ref={stageRef}
-        className="flex items-center justify-center rounded-xl border border-gray-300 bg-white shadow-sm"
+        className="flex h-[510] items-center justify-center rounded-xl border border-gray-300 bg-white shadow-sm"
         style={{
           backgroundImage:
             "linear-gradient(45deg, #f0f0f0 25%, transparent 25%)," +

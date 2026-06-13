@@ -46,9 +46,10 @@ export default function Home() {
   const uploadRef = useRef(null);
 
   const updateSize = useCallback((customRatio = DEFAULT_RATIO) => {
-    const maxWidth = stageRef.current.container().clientWidth * 0.9;
-    const maxHeight = window.innerHeight * 0.7;
+    const maxWidth = stageRef.current.container().clientWidth;
+    const maxHeight = 510; //window.innerHeight * 0.6;
     const ratio = customRatio.width / customRatio.height;
+    //console.log(document.body.clientWidth, window.innerHeight);
 
     let stageContainerWidth = maxWidth;
     let stageContainerHeight = stageContainerWidth / ratio;
@@ -108,6 +109,8 @@ export default function Home() {
         loadBackground(
           backgrounds[Math.floor(Math.random() * backgrounds.length)],
         );
+        //Next work is here. I will calculate the aspect ratio of the uploaded image and pass it to
+        //updateSize() for the native aspect ratio.
       };
     };
 
