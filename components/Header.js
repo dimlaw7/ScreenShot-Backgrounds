@@ -13,7 +13,7 @@ const Header = ({ uploadRef }) => {
             href="/"
             className="flex items-center truncate text-lg font-extrabold tracking-normal text-gray-950 lg:text-2xl"
           >
-            <div className="projectlogo mr-0.5"></div>
+            <div className="projectlogo mr-2"></div>
             ScreenShot<span className="text-primary">BG</span>
           </Link>
           <p className="text-muted hidden text-sm font-semibold lg:block">

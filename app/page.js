@@ -135,7 +135,7 @@ export default function Home() {
   return (
     <>
       <Header uploadRef={uploadRef} />
-      <main className="container mx-auto mt-4 flex max-w-7xl flex-col px-5 lg:flex-row lg:px-0">
+      <main className="container mx-auto mt-4 flex max-w-7xl flex-col px-5 lg:mt-8 lg:flex-row lg:px-0">
         <div className="flex-1 lg:px-4">
           <input
             type="file"
@@ -158,53 +158,57 @@ export default function Home() {
         </div>
 
         <div className="lg:w-80 lg:rounded-xl lg:px-4 lg:shadow">
-          <div className="_tabs border-border mt-8 flex rounded-xl border p-4 tracking-tight shadow-sm">
-            <button className="text-primary relative flex flex-1 flex-col items-center gap-1.5 px-2 tracking-tighter">
+          <div className="_tabs border-border mt-8 flex rounded-xl border px-2 py-4 tracking-tight shadow-sm">
+            <button className="text-primary relative flex flex-col items-center gap-1.5 px-2 tracking-tighter">
               <LucideImage size={16} />
-              <span className="text-xs font-bold">Background</span>
+              <span className="text-sm font-bold">Background</span>
               <div className="border-primary absolute -bottom-4 left-0 w-full border-b"></div>
             </button>
             <button className="text-muted relative flex flex-1 flex-col items-center gap-1.5 px-2">
               <Scaling size={16} />
-              <span className="text-xs font-bold">Ratio</span>
+              <span className="text-sm font-bold">Ratio</span>
             </button>
             <button className="text-muted relative flex flex-1 flex-col items-center gap-1.5 px-2">
               <ZoomIn size={16} />
-              <span className="text-xs font-bold">Zoom</span>
+              <span className="text-sm font-bold">Zoom</span>
             </button>
             <button className="text-muted relative flex flex-1 flex-col items-center gap-1.5 px-2">
               <Move size={16} />
-              <span className="text-xs font-bold">Position</span>
+              <span className="text-sm font-bold">Position</span>
             </button>
             <button className="text-muted relative flex flex-1 flex-col items-center gap-1.5 px-2">
               <RefreshCw size={16} />
-              <span className="text-xs font-bold">Actions</span>
+              <span className="text-sm font-bold">Actions</span>
             </button>
           </div>
 
-          <div className="mt-4">
-            <h2 className="mb-2 text-xs font-semibold">Backgrounds</h2>
+          <div className="mt-8">
+            <h2 className="mb-4 text-base font-semibold">Backgrounds</h2>
 
-            <div className="flex scrollbar-none flex-nowrap gap-2 overflow-x-scroll overflow-y-hidden">
+            <div className="flex scrollbar-none flex-nowrap gap-2 overflow-x-scroll overflow-y-hidden p-0.5">
               {backgrounds.map((bg) => (
                 <button
                   key={bg}
                   onClick={() => loadBackground(bg)}
                   className={`border-border shrink-0 rounded border transition hover:scale-105 ${selectedBg === bg ? "ring-primary ring-2" : ""}`}
                 >
-                  <img src={bg} alt="" className="h-12 w-18 object-cover" />
+                  <img
+                    src={bg}
+                    alt=""
+                    className="h-14 w-20 rounded object-cover"
+                  />
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="mt-4">
-            <h2 className="mb-2 text-xs font-semibold">Canvas Ratios</h2>
+          <div className="mt-8">
+            <h2 className="mb-4 text-base font-semibold">Canvas Ratios</h2>
 
             <div className="flex flex-wrap gap-2">
               {aspectRatios.map((r) => (
                 <button
-                  className="border-border text-muted flex-1 rounded-xl border px-4 py-2 text-xs font-bold shadow-sm"
+                  className="text-text flex-1 rounded-xl border border-gray-300 px-4 py-4 text-sm font-bold shadow-sm"
                   key={r.label}
                   onClick={() =>
                     updateSize({ width: r.width, height: r.height })
@@ -216,11 +220,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-4">
-            <h2 className="mb-2 text-xs font-semibold">Zoom</h2>
+          <div className="mt-8">
+            <h2 className="mb-2 text-base font-semibold">Zoom</h2>
 
             <div className="flex items-center justify-between">
-              <button className="border-border text-muted rounded-xl border px-4 py-2 text-xs font-bold shadow-sm">
+              <button className="text-text rounded-xl border border-gray-300 px-4 py-2 text-base font-bold shadow-sm">
                 -
               </button>
               <input
@@ -231,16 +235,16 @@ export default function Home() {
                 value={scale}
                 onChange={(e) => setScale(e.target.value)}
               />
-              <button className="border-border text-muted rounded-xl border px-4 py-2 text-xs font-bold shadow-sm">
+              <button className="text-text rounded-xl border border-gray-300 px-4 py-2 text-base font-bold shadow-sm">
                 120%
               </button>
-              <button className="border-border text-muted rounded-xl border px-4 py-2 text-xs font-bold shadow-sm">
+              <button className="text-text rounded-xl border border-gray-300 px-4 py-2 text-base font-bold shadow-sm">
                 +
               </button>
             </div>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-8">
             <button
               className="text-surface border--gray-900 bg-primary border-border flex w-full cursor-pointer items-center gap-2 rounded-lg border px-4 py-2 text-center text-sm font-medium shadow-sm transition hover:bg-gray-50 hover:shadow"
               onClick={handleDownload}
